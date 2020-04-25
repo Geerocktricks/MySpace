@@ -39,7 +39,10 @@
             <div class="sharethis-inline-share-buttons"></div>
             <h5 class="small" style="margin-top: 20px;margin-bottom: 20px;">Subscribe to our NewsLetter</h5>
             <form  action='{% url "post_list_view" %}' method="post">
-              
+              {%csrf_token%}
+                {% for field in letterForm %}
+                  {% bootstrap_field field %}
+                {% endfor %}
               <input type="submit" value="Subscribe">
             </form>
             <!-- <p class="tex-muted" style="text-align: right;text-transform: uppercase;"><span class="small">Creativity</span> <br> <span style="font-family: 'Anton', sans-serif;font-size: 20px;background: -webkit-linear-gradient(#eee, #333);-webkit-background-clip: text;-webkit-text-fill-color: transparent;">involves</span> <br> <span class="small">Breaking</span> <br> <span style="font-family: 'Anton', sans-serif;;font-size: 20px;background: -webkit-linear-gradient(#eee, #333);-webkit-background-clip: text;-webkit-text-fill-color: transparent;">out</span> <br> <span class="small">of</span> <br> <span class="small">established</span> <br> <span style="font-family: 'Anton', sans-serif;;font-size: 20px;background: -webkit-linear-gradient(#eee, #333);-webkit-background-clip: text;-webkit-text-fill-color: transparent;">patterns</span> <br> <span class="small">in order</span> <br> <span style="font-family: 'Anton', sans-serif;;font-size: 20px;background: -webkit-linear-gradient(#eee, #333);-webkit-background-clip: text;-webkit-text-fill-color: transparent;">to look</span> <br> <span class="small">at things</span> <br> <span style="font-family: 'Anton', sans-serif;;font-size: 20px;background: -webkit-linear-gradient(#eee, #333);-webkit-background-clip: text;-webkit-text-fill-color: transparent;">in a</span> <br> <span style="font-family: 'Anton', sans-serif;;font-size: 20px;background: teal;-webkit-background-clip: text;-webkit-text-fill-color: transparent;">different way</span></p>
@@ -72,6 +75,18 @@
       document.body.scrollTop = 0;
       document.documentElement.scrollTop = 0;
     }
+    function searchToggle(obj, evt){
+    var container = $(obj).closest('.search-wrapper');
+        if(!container.hasClass('active')){
+            container.addClass('active');
+            evt.preventDefault();
+        }
+        else if(container.hasClass('active') && $(obj).closest('.input-holder').length == 0){
+            container.removeClass('active');
+            // clear input
+            container.find('.search-input').val('');
+        }
+}
     </script>
 </body>
 <style>

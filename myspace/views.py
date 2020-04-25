@@ -1,10 +1,10 @@
 from django.shortcuts import render, get_object_or_404,redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .models import Post,NewsLetterRecipients,Category
+from .models import Post,NewsLetterRecipients,Category, update_post_id_field_in_category_model
 from .forms import NewsLetterForm
 from django.http import HttpResponse, Http404,HttpResponseRedirect
 from .email import send_welcome_email
-
+from random import sample
 
 def post_list_by_category(request , category_slug):
     categories = Category.objects.all()
@@ -12,7 +12,17 @@ def post_list_by_category(request , category_slug):
     if category_slug:
         category = get_object_or_404(Category, slug=category_slug)
         post = post.filter(category=category)
-    return render(request, 'blog/category/list_by_category.html', {'categories': categories, 'post': post, 'category': category})
+    if request.method == 'POST':
+        form = NewsLetterForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['your_name']
+            email = form.cleaned_data['email']
+            recipient = NewsLetterRecipients(name = name,email =email)
+            recipient.save()
+            HttpResponseRedirect('post_detail_view')
+    else:
+        form = NewsLetterForm()
+    return render(request, 'blog/category/list_by_category.html', {'categories': categories, 'post': post, 'category': category, "letterForm":form,})
 
 
 def post_list_view(request, category_slug=None):
@@ -42,7 +52,12 @@ def post_list_view(request, category_slug=None):
             HttpResponseRedirect('post_list_view')
     else:
         form = NewsLetterForm()
-    return render(request, 'blog/post/list.html', {'posts': posts,"letterForm":form, 'recent': recent, 'categories': categories, 'post': post})
+    
+    categorypostdictionary = {category: list(set([Post.objects.get( id=x ) for x in category.post_ids if len(category.post_ids) > 1])) for category in categories}
+
+    twopercategory = {x: sample( categorypostdictionary[x], 2 ) for x in categorypostdictionary if len(list(set( categorypostdictionary[x]))) > 1}
+
+    return render(request, 'blog/post/list.html', {'posts': posts,"letterForm":form, 'recent': recent, 'categories': categories, 'post': post, 'twopercategory': twopercategory})
 
 def post_detail_view(request, year, month, day, post, category_slug=None):
     categories = Category.objects.all()
@@ -65,16 +80,25 @@ def post_detail_view(request, year, month, day, post, category_slug=None):
 def search_results(request, category_slug=None):
     categories = Category.objects.all()
     post = Post.objects.filter(status='published')
+    paginator = Paginator(post, 1)
+    page = request.GET.get('page')
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        article = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
     if category_slug:
-        category = get_object_or_404(Category, slug=category_slug)
+        posts = get_object_or_404(Category, slug=category_slug)
         post = post.filter(category=category)
     if 'article' in request.GET and request.GET["article"]:
         search_term = request.GET.get("article")
         searched_articles = Post.search_by_title(search_term)
         message = f"{search_term}"
 
-        return render(request, 'blog/post/search.html',{"message":message,"articles": searched_articles, 'categories': categories, 'post': post})
+        return render(request, 'blog/post/search.html',{"message":message,"articles": searched_articles, 'categories': categories, 'post': post,})
 
     else:
         message = "You haven't searched for any term"
+    
         return render(request, 'blog/post/search.html',{"message":message, 'categories': categories, 'post': post})

@@ -1,16 +1,28 @@
 <div class="container">
-    <div class="row">
-    <span class="pagination">
+    <div class="row text-center">
+    <span class="pagination" style="margin: auto;">
         {% if page.has_previous %}
-            <a href="?page={{ page.previous_page_number }}">previous</a>
+            <a class="anchor" href="?page={{ page.previous_page_number }}" style="margin-right: 10px;"><<</a>
         {% endif %}
 
-      <span class="active">
+      <span class="active" style="padding: 10px;border: 1px solid rgba(0, 0, 0, .3);">
           page {{ page.number }} of {{ page.paginator.num_pages }}
       </span>
     {% if page.has_next %}
-        <a href="?page={{ page.next_page_number }}">next</a>
+        <a class="anchor" href="?page={{ page.next_page_number }}" style="margin-left: 10px; ">>></a>
     {% endif %}
     </span>
 </div>
+<style>
+    .anchor{
+        border: 1px solid rgba(0, 0, 0, .3);
+        padding: 10px;
+    }
+    .anchor:hover{
+        background-color: teal;
+        color: white;
+        border: 1px solid white;
+        text-decoration: none;
+    }
+</style>
 </div>

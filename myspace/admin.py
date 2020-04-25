@@ -18,6 +18,6 @@ admin.site.register(tags)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ['name', 'slug']
     prepopulated_fields = {'slug': ('name',)}
-
+    exclude = ('post_ids',)
 
 admin.site.register(Category, CategoryAdmin)

@@ -34,13 +34,30 @@
         {% endfor %}
     </div>
    </div>
-   <hr>
-   <div>
-    {% for post in article %}
-    <p>good</p>
-    {% endfor %}
-   </div>
-    {% include "pagination.html" with page=posts %}
+    <!--    Start twopercategory Interpolation-->
+    <div class="row">
+        {% for category, posts in twopercategory.items %}
+        <div class="col-md-12">
+            <div class=" ">
+                <h3 style="font-family: 'Abril Fatface', cursive;color: rgba(0, 0, 0, .6);">{{category.name}}</h3>
+                <hr>
+            {%for post in posts%}
+            <!-- <div class="row col-md-12"> -->
+                <div class="col-md-6">
+                    <img src="{{post.article_image.url}}" alt="{{post.title}}" style="height: 200px;width: 250px;">
+                </div>
+                <div class="col-md-6">
+                    <p class="">{{post.title}}</p>
+                </div>
+            <!-- </div> -->
+            <br style="margin:20px">
+            {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <!--    End Interpolation-->
+    
     <style>
         
     </style>

@@ -3,6 +3,14 @@ from . import views
 from django.conf import settings
 from django.conf.urls.static import static
 from .feeds import PostsFeed
+from .models import *
+
+
+def add_post_ids_to_categories():
+    for post in Post.objects.all():
+        post.save()
+add_post_ids_to_categories()
+
 
 urlpatterns = [
     url(r'^$', views.post_list_view, name='post_list_view'),
