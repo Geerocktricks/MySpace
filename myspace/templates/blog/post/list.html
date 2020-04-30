@@ -9,31 +9,34 @@
         <!-- <h2 class="page-header">Recents Posts</h2> -->
      {% for post in posts %}
      <h3 style="font-family: 'Abril Fatface', cursive;"><a href="{{ post.get_absolute_url }}" style="color: rgba(0, 0, 0, .6);">{{ post.title }}</a></h3>   
-      <p class="small text-muted">Published {{ post.publish }} by {{ post.author }}</p>
+      <p class="small text-muted">Published on {{ post.publish| date:'d F Y' }} by <span style="color: teal;">{{ post.author }}</span></p>
       <hr>
-      <a href="{{ post.get_absolute_url }}"><img src="{{ post.article_image.url}}" alt="Corona-Aftermath" style="height: 395px;width: 400px;"></a>
-      <p >{{ post.body|truncatewords:100|linebreaks }}</p>
+      <a href="{{ post.get_absolute_url }}"><img src="{{ post.article_image.url}}" alt="Corona-Aftermath" class="topImage"></a>
+      <p>{{ post.body|truncatewords:100|linebreaks }}</p>
       <a href="{{ post.get_absolute_url }}"><p class="btn"  style="background-color: teal;color: white;">Read more</p></a>
   {% endfor %}
     </div>
     <div class="col-md-6">
         <h3 style="font-family: 'Abril Fatface', cursive;color: rgba(0, 0, 0, .6);">Top Posts</h3>
-        <p class="small text-muted">Posts You might have misseds</p>
+        <p class="small text-muted">Posts You might have missed</p>
         {% for post in recent %}
         <hr>
         <div class="row">
-            <div class="col-md-6">
-                <a href="{{ post.get_absolute_url }}"><img src="{{ post.article_image.url}}" alt="Corona-Aftermath" style="height: 100px;width: 150px;"></a>
+            <div class="col-md-6 ">
+                <a href="{{ post.get_absolute_url }}"><img src="{{ post.article_image.url}}" alt="Corona-Aftermath" style="" class="recentImage"></a>
             </div>
-            <div class="col-md-6" style="margin-left: -40px;">
+            <div class="col-md-6 recentDetails" style="" >
                 <h3  style="font-family: 'Abril Fatface', cursive; font-size: 15px;"><a href="{{ post.get_absolute_url }}" style="color: rgba(0, 0, 0, .6);">{{ post.title }}</a></h3>
-                <p class="small text-muted" >Posted on &#x1F4C5; {{ post.publish }} by {{ post.author }}</p>
-                <p class="small text-muted">{{ post.category }}</p>
+                <p class="small text-muted" ><i class="fa fa-calendar" style="color: teal;"></i> Posted on <span style="color: teal;">{{ post.publish|date:'d F Y' }}</span> by <b style="color: teal;">{{ post.author }}</b></p>
+                <p class="small" style="color: teal;">{{ post.category }}</p>
             </div>
         </div>
         {% endfor %}
     </div>
    </div>
+   <br>
+   <br>
+   <br>
     <!--    Start twopercategory Interpolation-->
     <div class="row">
         {% for category, posts in twopercategory.items %}
@@ -42,24 +45,90 @@
                 <h3 style="font-family: 'Abril Fatface', cursive;color: rgba(0, 0, 0, .6);">{{category.name}}</h3>
                 <hr>
             {%for post in posts%}
-            <!-- <div class="row col-md-12"> -->
+            <div class="row col-md-12">
                 <div class="col-md-6">
-                    <img src="{{post.article_image.url}}" alt="{{post.title}}" style="height: 200px;width: 250px;">
+                    <a href="{{ post.get_absolute_url }}"><img src="{{post.article_image.url}}" alt="{{post.title}}" style="" class="categoryImage"></a>
                 </div>
                 <div class="col-md-6">
-                    <p class="">{{post.title}}</p>
+                    <h3 style="font-family: 'Abril Fatface', cursive;"><a href="{{ post.get_absolute_url }}" style="color: rgba(0, 0, 0, .6);">{{ post.title }}</a></h3>
+                    <p >{{ post.body|truncatewords:20|linebreaks }}</p>
+                    <p class="small">by <span style="color: teal;font-weight: 600;">{{post.author}}</span></p>
+                    <p class="small text-muted">Published on {{post.publish |date:'d F Y'}}</p>
+                    
                 </div>
-            <!-- </div> -->
+            </div>
             <br style="margin:20px">
             {% endfor %}
+            <a href="{{ category.get_absolute_url }}" style="text-align:right"><p class="text-muted">More on {{category.name}}>></p></a>
             </div>
+            
         </div>
         {% endfor %}
     </div>
     <!--    End Interpolation-->
     
     <style>
-        
+        a:hover{
+            text-decoration: none;
+        }
+        /* **************************************************************************************************************** */
+    /* **********************************MEDIA QUERIES ********************************************* */
+    /* ***************MOBILE PHONE PORTRAIT************************************************************************************************* */
+    @media (max-width: 575.98px) {
+        .topImage{
+        height: 250px;
+        width: 97%;
+    }
+    .categoryImage{
+        height: 200px;
+        width: 100%;
+    }
+    .recentImage{
+        height: 100px;
+        width: 50%;
+        display: none;
+    }
+}
+/* *************************************************************************************************************** */
+/* *************************************************************************************************************** */
+/* ************MOBILE LANDSCAPE********************************************************************************** */
+@media (min-width: 575.98px) {
+    .topImage{
+        height: 250px;
+        width: 97%;
+    }
+    .categoryImage{
+        height: 200px;
+        width: 97%;
+    }
+    .recentImage{
+        height: 100px;
+        width: 50%;
+        display: none;
+    }
+}
+
+/* *************************************************************************************************************** */
+/* *************************************************************************************************************** */
+/* ************TABLETS********************************************************************************** */
+@media (min-width: 767.98px) {
+    .topImage{
+        height: 250px;
+        width: 100%;
+    }
+    .categoryImage{
+        height: 200px;
+        width: 100%;
+    }
+    .recentDetails{
+        /* margin-left: -40px; */
+    }
+    .recentImage{
+        height: 100px;
+        width: 100%;
+        display: block;
+    }
+}
     </style>
     {% endblock %}
 </div>

@@ -1,13 +1,15 @@
-{% extends "blog/master.html" %}
+{% extends "blog/masterz.html" %}
 {% block title %}search results page | Diaries of a KenyanDreamer{% endblock %}
 {% block content %}
 <div class="container">
 
   <div class="row">
     {% if articles%}
-      <h2 class="small">Found {{ articles|length }} of searched term {{message}}</h2>
+      <h2 class="small btn btn-success">Found {{ articles|length }} of searched term {{message}}</h2>
     {% else %}
-      <h2 class="small"> search term {{message}} not found</h2>
+      <div class="" style="min-height: 100px;">
+        <h2 class="small btn btn-info"> search term {{message}} not found</h2>
+      </div>
     {% endif %}
 
   </div>
@@ -16,13 +18,14 @@
 
   {% if articles %}
     {% for article in articles %}
+    <br>
       <div>
           <h3 style="font-family: 'Abril Fatface', cursive;"><a href="{{ article.get_absolute_url }}" style="color: rgba(0, 0, 0, .6);">{{ article.title }}</a></h3>
-          <p class="small text-muted">Published {{ article.publish }} by {{ article.author }}</p>
+          <p class="small text-muted">Published on {{ article.publish| date:'d F Y' }} by <b style="color: teal;">{{ article.author }}</b></p>
           <hr>
           <div class="row">
             <div class="col-md-4">
-              <img src="{{ article.article_image.url}}" alt="Corona-Aftermath" style="height: 250px;width: 260px;">
+              <img src="{{ article.article_image.url}}" alt="Corona-Aftermath" style="width: 100%" class="searchImage">
             </div>
             <div class="col-md-7">
               <p>{{ article.body|truncatewords:50|linebreaks }}</p>
@@ -35,4 +38,23 @@
   <hr>
   </div>
 </div>
+<style>
+  .searchImage{
+    height: 250px;
+  }
+  @media (min-width: 767.98px) {
+    .searchImage{
+        height: 200px;
+        margin-top: 25px;
+        /* width: 230px; */
+    }
+}
+
+@media(min-width: 992.98px){
+  .searchImage{
+        height: 250px;
+        /* width: 230px; */
+    }
+}
+</style>
 {% endblock %}

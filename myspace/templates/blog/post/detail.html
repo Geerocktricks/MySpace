@@ -1,31 +1,80 @@
-{% extends "blog/masterz.html" %}
+{% extends "blog/base.html" %}
 
 {% block title %}{{ post.title }} | Diaries of a KenyanDreamer{% endblock %}
 
 {% block content %}
 <div class="container">
     <h3 class="posttitile" style="font-family: 'Abril Fatface', cursive;color: rgba(0, 0, 0, .6);">{{ post.title }}</h3>
-<p class="small text-muted">Published {{ post.publish }} by {{ post.author }}</p>
+    <p class="small text-muted">Published on {{ post.publish| date:'d F Y' }} by <span style="color: teal;">{{ post.author }}</span></p>
 <hr>
-<img src="{{ post.article_image.url}}" alt="Corona-Aftermath">
-<p id="body">{{ post.body|linebreaks }}</p>
+<img src="{{ post.article_image.url}}" alt="{{ post.title }} image" class="postImage">
+<br><br><br>
+<p id="body">{{ post.body|safe }}</p>
 <p class="small text-muted">Share this Story</p>
 <div class="sharethis-inline-share-buttons"></div>
 </div>
+<br>
+<h3>More posts</h3>
+<hr>
+<div class="container">
+    <div class="row col-md-12">
+{% for post in recent %}
+            <div class="col-md-3">
+                <a href="{{ post.get_absolute_url }}"><img src="{{ post.article_image.url}}" alt="Corona-Aftermath" class='morepics' style="width: 100%"></a>
+                <p  style="font-family: 'Abril Fatface', cursive; font-size: 15px;"><a href="{{ post.get_absolute_url }}" style="color: rgba(0, 0, 0, .6);">{{ post.title }}</a></p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+<br>
 <p><b>JOIN THE CONVERSATION</b></p>
-<div class="fb-comments col-md-12" data-href="{{ post.get_absolute_url }}" data-numposts="5" data-width="800"></div>
+<div class="fb-comments " data-href="{{ post.get_absolute_url }}" data-numposts="5" data-width=""></div>
 <style>
-    img{
+    .postImage{
         height: 450px;
-        width: 800px;
+        width: 100%;
+        
     }
-    /* *************MEDIA QUERIES******************* */
-    @media (max-width: 599px) {
-        img{
-        height: 179px;
-        width: 97%;
+    .blockquote{
+        font-style: italic;
+        padding: 20px;
+        padding-top: 20px;
+        background-color: #f5f5f5;
+        color: rgba(0, 0, 0, .6);
+        border-left: 5px solid teal;
+        min-height: 150px;
+        width: 100%;
+        margin-bottom: 20px;
     }
+    .elabImage{
+        width: 95%;
+        /* height: 300px; */
+        
     }
+     /* **************************************************************************************************************** */
+    /* **********************************MEDIA QUERIES ********************************************* */
+    /* ***************MOBILE PHONE PORTRAIT************************************************************************************************* */
+    @media (max-width: 575.98px) {
+      .morepics{
+          height: 150px;
+      }
+}
+/* *************************************************************************************************************** */
+/* *************************************************************************************************************** */
+/* ************MOBILE LANDSCAPE********************************************************************************** */
+@media (min-width: 575.98px) {
+    
+}
+
+/* *************************************************************************************************************** */
+/* *************************************************************************************************************** */
+/* ************TABLETS********************************************************************************** */
+@media (min-width: 767.98px) {
+    .morepics{
+          height: 120px;
+      }
+}
+  
 
 </style>
 {% endblock %}

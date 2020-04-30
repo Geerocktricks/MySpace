@@ -30,7 +30,7 @@
           </div>
           <div class="col-md-3">
             <h3 style="font-family: 'Abril Fatface', cursive;color: rgba(0, 0, 0, .6);">#Geerock_talks</h3>
-            <p class="small"><a href="{% url 'post_feed' %}" target="_blank" >Subscribe to RSS Feed</a></p>
+            <p class="small"><a href="{% url 'post_feed' %}" target="_blank">Subscribe to RSS Feed</a></p>
             <hr>
             <div class="fb-page fbPage" data-href="https://www.facebook.com/diariesofakenyandreamer/"  data-width="" data-height=""  data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/diariesofakenyandreamer/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/diariesofakenyandreamer/">Diaries of a KenyanDreamer</a></blockquote></div>
             <p class="" style="margin-top: 20px;">Someone depends on your action to inspire their actions. <br> <b style="color: teal;">Spread the love</b></p>
@@ -70,14 +70,13 @@
           </div>
       </div>
   </div>
-  {% include "pagination.html" with page=posts %}
   <footer style="text-align: center; background-color: teal;margin-top: 50px;height: 200px;">
-      <div class="container">
-        <div class="row col-md-12">
-          <p style="color: white;" >Made by Gerald Waweru with love. <a style="color: white;" href='{% url "post_list_view" %}'><span style="font-family: 'Abril Fatface'">Diaries of a KenyanDreamer</span></a>. Copyright © 2020. All rights reserved.</p>
-        </div>
+    <div class="container">
+      <div class="row col-md-12">
+        <p style="color: white;" >Made by Gerald Waweru with love. <a style="color: white;" href='{% url "post_list_view" %}'><span style="font-family: 'Abril Fatface'">Diaries of a KenyanDreamer</span></a>. Copyright © 2020. All rights reserved.</p>
       </div>
-  </footer>
+    </div>
+</footer>
   <script>
     //Get the button
     var mybutton = document.getElementById("myBtn");
