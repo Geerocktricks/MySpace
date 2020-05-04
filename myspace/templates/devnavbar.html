@@ -14,11 +14,11 @@
     <!-- Adding a search form  -->
     <div class="col-sm-4 col-md-4 navbar-right smallSearchInput">
 
-      <form class="navbar-form " role="search" action="{% url 'search_results' %}">
+      <form class="navbar-form " role="search" action="{% url 'devsearch_results' %}">
 
         <div>
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search Article" name="article">
+            <input type="text" class="form-control" placeholder="Search lesson..." name="article">
             <div class="input-group-btn">
               <button type="submit" class="btn"><i class="fa fa-search"></i></button>
             </div>
@@ -43,8 +43,8 @@
                 <hr>
               {% endfor %}
               <div class="dropdown" style="background-color: teal;">
-                <li {% if not category %} class="active dropbtn"{% endif %} style="margin-right: 20px;color: white;">Hands on Programming <i class="fa fa-caret-down"></i>
-                  <ul class="dropdown-content list-unstyled" style="background-color: white;" >
+                <li {% if not category %} class="active dropbtn"{% endif %} style="margin-right: 20px;">Hands on Programming <i class="fa fa-caret-down"></i>
+                  <ul class="dropdown-content" style="background-color: white;" >
                     {% for y in kategories %}
                   <li {% if kategory.slug == y.slug %} class="active"{% endif %} style="margin-right: 20px;">
                     <a href="{{ y.get_absolute_url }}" style="">{{ y.name }}</a>
@@ -59,11 +59,11 @@
       <!-- Adding a search form  -->
     <div class="col-sm-4 col-md-4 navbar-right ">
 
-      <form class="navbar-form " role="search" action="{% url 'search_results' %}">
+      <form class="navbar-form " role="search" action="{% url 'devsearch_results' %}">
 
         <div>
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search Article" name="article">
+            <input type="text" class="form-control" placeholder="Search lesson..." name="article">
             <div class="input-group-btn">
               <button type="submit" class="btn"><i class="fa fa-search"></i></button>
             </div>
@@ -85,20 +85,21 @@
                 <a href="{{ c.get_absolute_url }}" style="color: white;">{{ c.name }}</a>
             </li>
                 <hr>
-              {% endfor %}
-              <div class="dropdown" style="background-color: teal;">
-                <li {% if not category %} class="active dropbtn"{% endif %} style="margin-right: 20px;color: white;">Hands on Programming <i class="fa fa-caret-down"></i>
-                  <ul class="dropdown-content list-unstyled" style="background-color: white;" >
-                    {% for y in kategories %}
-                  <li {% if kategory.slug == y.slug %} class="active"{% endif %} style="margin-right: 20px;">
-                    <a href="{{ y.get_absolute_url }}" style="">{{ y.name }}</a>
-                </li>
-                
-                    <hr>
-                  {% endfor %}
-                  </ul>
-              </div>
+        {% endfor %}
+        <div class="dropdown" style="background-color: teal;">
+            <li {% if not category %} class="active dropbtn"{% endif %} style="margin-right: 20px;">Hands on Programming <i class="fa fa-caret-down"></i>
+              <ul class="dropdown-content" style="background-color: white;" >
+                {% for y in kategories %}
+              <li {% if kategory.slug == y.slug %} class="active"{% endif %} style="margin-right: 20px;">
+                <a href="{{ y.get_absolute_url }}" style="">{{ y.name }}</a>
             </li>
+            
+                <hr>
+              {% endfor %}
+              </ul>
+          </div>
+        </li>
+
       </ul>
     </div>
     <div class="row col-md-12">
@@ -108,11 +109,11 @@
       <!-- Adding a search form  -->
       <div class="col-sm-4 col-md-4 navbar-right miniSearchInput">
   
-        <form class="navbar-form " role="search" action="{% url 'search_results' %}">
+        <form class="navbar-form " role="search" action="{% url 'devsearch_results' %}">
   
           <div>
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="Search Article" name="article">
+              <input type="text" class="form-control" placeholder="Search lesson..." name="article">
               <div class="input-group-btn">
                 <button type="submit" class="btn"><i class="fa fa-search"></i></button>
               </div>
@@ -255,7 +256,6 @@
   margin-left: 50px;
   color: #ffff;
 }
-
 .dropdown-content {
   display: none;
   position: absolute;
@@ -266,7 +266,6 @@
   min-width: 200px;
   padding: 10px;
 }
-
        }
 
 

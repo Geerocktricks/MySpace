@@ -11,8 +11,8 @@
      <h3 style="font-family: 'Abril Fatface', cursive;"><a href="{{ post.get_absolute_url }}" style="color: rgba(0, 0, 0, .6);">{{ post.title }}</a></h3>   
       <p class="small text-muted">Published on {{ post.publish| date:'d F Y' }} by <span style="color: teal;">{{ post.author }}</span></p>
       <hr>
-      <a href="{{ post.get_absolute_url }}"><img src="{{ post.article_image.url}}" alt="Corona-Aftermath" class="topImage"></a>
-      <p>{{ post.body|truncatewords:100|linebreaks }}</p>
+      <a href="{{ post.get_absolute_url }}"><img src="{{ post.article_image.url}}" alt="Corona-Aftermath" class="topImage"></a><br>
+      <p>{{ post.body|truncatewords:100|safe }}</p>
       <a href="{{ post.get_absolute_url }}"><p class="btn"  style="background-color: teal;color: white;">Read more</p></a>
   {% endfor %}
     </div>
@@ -113,7 +113,7 @@
 /* ************TABLETS********************************************************************************** */
 @media (min-width: 767.98px) {
     .topImage{
-        height: 250px;
+        height: 350px;
         width: 100%;
     }
     .categoryImage{

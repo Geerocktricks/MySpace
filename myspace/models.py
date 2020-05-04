@@ -5,6 +5,7 @@ from django.urls import reverse
 import django.utils.timezone as now
 from django.contrib.postgres.fields import ArrayField
 from django.db.models.signals import post_save
+from taggit.managers import TaggableManager
 
 class tags(models.Model):
     name = models.CharField(max_length =30)
@@ -48,6 +49,37 @@ class Category(models.Model):
     def get_absolute_url(self):
         return reverse('post_list_by_category', args=[self.slug])
 
+
+# Kategory
+
+
+class Kategory(models.Model):
+    name = models.CharField(max_length=150, db_index=True)
+    slug = models.SlugField(max_length=150, unique=True ,db_index=True)
+    post_ids = ArrayField( models.IntegerField( default=0 ), default=list )
+    created_at = models.DateTimeField(default=now.now, editable=False)
+    updated_at = models.DateTimeField(default=now.now)
+
+    class Meta:
+        ordering = ('name', )
+        verbose_name = 'kategory'
+        verbose_name_plural = 'kategories'
+
+    def save(self, *args, **kwargs):
+        ''' On save, update timestamps '''
+        if not self.id:
+            self.created_at = timezone.now() # new posts creation date
+        self.updated_at = timezone.now() # old posts update date
+        return super( Kategory, self ).save( *args, **kwargs )
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('devpost_list_by_category', args=[self.slug])
+        
+
+
 # Post Model
 
 class Post(models.Model):
@@ -88,6 +120,50 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('post_detail_view', args=[self.publish.year, self.publish.strftime('%m'),self.publish.strftime('%d'),self.slug])
 
+
+#  DevPost
+
+class DevPost(models.Model):
+    STATUS_CHOICES = (
+        ('draft', 'Draft'),
+        ('published', 'Published'),
+    )
+    title = models.CharField(max_length=250)
+    slug = models.SlugField(max_length=250, unique_for_date='publish')
+    author = models.ForeignKey(User, related_name='dev_posts', on_delete=models.CASCADE,)
+    body = models.TextField()
+    publish = models.DateTimeField(default=timezone.now)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
+    article_image = models.ImageField(upload_to = 'posts/')
+    dev_tags = TaggableManager()
+    kategory = models.ForeignKey(Kategory, related_name='dev_posts', on_delete=models.CASCADE)
+
+    # The default manager
+    objects = models.Manager()
+
+    # Custom made manager
+    published = PublishedManager()
+
+    class Meta:
+        ordering = ('publish',)
+        index_together = (('id', 'slug'),)
+    
+    @classmethod
+    def devsearch_by_title(cls,search_term):
+        devpost = cls.objects.filter(title__icontains=search_term)
+        return devpost
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse('devpost_detail_view', args=[self.publish.year, self.publish.strftime('%m'),self.publish.strftime('%d'),self.slug])
+
+
+
+# Newsletter
 class NewsLetterRecipients(models.Model):
     name = models.CharField(max_length = 30)
     email = models.EmailField()

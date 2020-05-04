@@ -20,6 +20,9 @@
               {% endblock %}
               {% bootstrap_css %}
               {% bootstrap_javascript jquery='full' %}
+              {% block scripts %} {{block.super}}
+                <script type="text/javascript" src="{%static 'js/newsletter.js'%}"></script>
+              {% endblock %}
               <div id="fb-root"></div>
               <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Great+Vibes&display=swap" rel="stylesheet">
               <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700&display=swap" rel="stylesheet">
