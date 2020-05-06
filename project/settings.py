@@ -25,7 +25,7 @@ SECRET_KEY = '6ok#5@crhfeum543qvxe+8l4n7)g3i-g0)j%x+&ps#gyj4n3#3'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['diariesofakenyandreamer.herokuapp.com']
 
 # Email configurations 
 EMAIL_USE_TLS = config('EMAIL_USE_TLS')
