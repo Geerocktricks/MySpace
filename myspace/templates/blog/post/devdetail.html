@@ -57,7 +57,8 @@ s.setAttribute('data-timestamp', +new Date());
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 <script id="dsq-count-scr" src="//diaries-of-a-kenyandreamer.disqus.com/count.js" async></script>
-{% endblock %}
+
+
 <style>
     .postImage{
         
@@ -67,22 +68,39 @@ s.setAttribute('data-timestamp', +new Date());
   padding: 2px;
 }
 .codetag{
-    border: 2px solid teal;
-    padding: 10px;
-    border-radius: 30px;
+    border: 1px solid teal;
+    padding: 3px;
+    border-radius: 10px;
+    color: teal;
+    font-family: monospace;
 }
 .blockquote{
-        font-style: italic;
+        /* font-style: italic; */
         padding: 20px;
         padding-top: 20px;
-        background-color: #f5f5f5;
-        color: rgba(0, 0, 0, .6);
-        border-left: 5px solid teal;
+        background-color: #2a2a2a;
+        /* color: rgba(0, 0, 0, .6); */
+        /* border-left: 5px solid teal; */
         min-height: 150px;
         width: 100%;
+        margin-top: 20px;
         margin-bottom: 20px;
         overflow: scroll;
         word-wrap: none;
-        line-height:3rem;
+        line-height:2.65rem;
+        color: rgb(167, 167, 167);
+        scrollbar-highlight-color: cadetblue;
+        font-family: monospace;
+        font-weight: 100;
+    }
+    .virtual{
+        color: green;
+    }
+    .caret{
+        color:rgb(188, 21, 230)
+    }
+    .blockquote a{
+        color: teal;
     }
 </style>
+{% endblock %}
