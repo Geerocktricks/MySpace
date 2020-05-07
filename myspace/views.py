@@ -10,6 +10,7 @@ from taggit.models import Tag
 from django.http import JsonResponse
 
 # Blog categories
+@property
 def post_list_by_category(request , category_slug):
     categories = Category.objects.all()
     kategories = Kategory.objects.all()
@@ -21,7 +22,7 @@ def post_list_by_category(request , category_slug):
     return render(request, 'blog/category/list_by_category.html', {'categories': categories, 'post': post, 'category': category, "letterForm":form,'kategories': kategories,})
 
 
-
+@property
 def tagged(request,  kategory_slug, slug=None):
     tag = get_object_or_404(Tag, slug=slug)
     # Filter posts by tag name  
@@ -35,6 +36,7 @@ def tagged(request,  kategory_slug, slug=None):
 
 
 # Dev categories
+@property
 def devpost_list_by_category(request , kategory_slug):
     # tag = get_object_or_404(Tag, slug=slug)
     categories = Category.objects.all()
@@ -48,6 +50,7 @@ def devpost_list_by_category(request , kategory_slug):
     return render(request, 'blog/category/devpost_by_category.html', {'kategories': kategories, 'devpost': devpost, 'kategory': kategory,"letterForm":form,'categories': categories,'common_tags':common_tags,})
 
 # Blog list view
+@property
 def post_list_view(request, category_slug=None):
     categories = Category.objects.all()
     kategories = Kategory.objects.all()
@@ -76,6 +79,7 @@ def post_list_view(request, category_slug=None):
 
 
 # Dev list view
+@property
 def devpost_list_view(request, kategory_slug=None):
     kategories = Kategory.objects.all()
     categories = Category.objects.all()
@@ -104,6 +108,7 @@ def devpost_list_view(request, kategory_slug=None):
 
 
 # Blog detail view
+@property
 def post_detail_view(request, year, month, day, post, category_slug=None):
     categories = Category.objects.all()
     kategories = Kategory.objects.all()
@@ -116,6 +121,7 @@ def post_detail_view(request, year, month, day, post, category_slug=None):
     return render(request, 'blog/post/detail.html', {'post': post,"letterForm":form, 'categories': categories, 'recent': recent,'kategories': kategories,})
 
 # Dev detail view
+@property
 def devpost_detail_view(request, year, month, day, post, Kategory_slug=None):
     kategories = Kategory.objects.all()
     categories = Category.objects.all()
@@ -128,7 +134,7 @@ def devpost_detail_view(request, year, month, day, post, Kategory_slug=None):
     form = NewsLetterForm()
     return render(request, 'blog/post/devdetail.html', {'devpost': devpost,"letterForm":form,'categories': categories,'kategories': kategories,'common_tags':common_tags, })
 
-
+@property
 def search_results(request, category_slug=None):
     categories = Category.objects.all()
     kategories = Kategory.objects.all()
@@ -158,7 +164,7 @@ def search_results(request, category_slug=None):
         return render(request, 'blog/post/search.html',{"message":message, 'categories': categories, 'post': post ,'kategories': kategories,})
 
 
-
+@property
 def devsearch_results(request, category_slug=None):
     categories = Category.objects.all()
     kategories = Kategory.objects.all()
