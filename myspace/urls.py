@@ -6,10 +6,10 @@ from .feeds import PostsFeed, DevPostsFeed
 from .models import *
 
 
-def add_post_ids_to_categories():
-    for post in Post.objects.all():
-        post.save()
-add_post_ids_to_categories()
+# def add_post_ids_to_categories():
+#     for post in Post.objects.all():
+#         post.save()
+# add_post_ids_to_categories()
 
 
 urlpatterns = [
