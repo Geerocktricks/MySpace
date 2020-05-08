@@ -2,7 +2,7 @@ from django.conf.urls import url
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
-from .feeds import PostsFeed
+from .feeds import PostsFeed, DevPostsFeed
 from .models import *
 
 
@@ -19,6 +19,7 @@ urlpatterns = [
     url(r'^search/', views.search_results, name='search_results'),
     url(r'^devsearch/', views.devsearch_results, name='devsearch_results'),
     url(r'^feed/$', PostsFeed(), name='post_feed'),
+    url(r'^programmingfeed/$', DevPostsFeed(), name='devpost_feed'),
     url(r'^category/(?P<category_slug>[-\w]+)/$', views.post_list_by_category, name='post_list_by_category'),
     url(r'^programming/(?P<kategory_slug>[-\w]+)/$', views.devpost_list_by_category, name='devpost_list_by_category'),
     url(r'^tag/(?P<kategory_slug>)/$', views.tagged, name='tagged'),

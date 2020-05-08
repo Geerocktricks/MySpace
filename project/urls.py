@@ -15,14 +15,16 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from django.contrib.sitemaps.views import sitemap
-from myspace.sitemaps import PostSitemap
 from django.contrib.auth import views
+from django.contrib.sitemaps.views import sitemap
+from myspace.sitemaps import PostSitemap , DevPostSitemap
+from myspace.views import *
 
 app_name='myspace'
 
 sitemaps = {
-    'posts' : PostSitemap
+    'posts' : PostSitemap, 
+    'devposts' : DevPostSitemap,
 }
 
 urlpatterns = [
